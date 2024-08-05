@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">FoodCraft</string>
+    <string name="login_logo">Login logo</string>
+    <string name="welcome_title">Bem vindo de volta!</string>
+    <string name="welcome_subtitle">Sentimos sua falta.</string>
+    <string name="email">Email</string>
+    <string name="password">Senha</string>
+    <string name="login">Login</string>
+    <string name="forgot_password">Esqueceu a senha?</string>
+    <string name="dont_have_an_account">Não tem uma conta? Casdastre-se!</string>
 </resources>
