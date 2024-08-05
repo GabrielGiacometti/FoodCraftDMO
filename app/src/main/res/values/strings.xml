@@ -5,7 +5,11 @@
     <string name="welcome_subtitle">Sentimos sua falta.</string>
     <string name="email">Email</string>
     <string name="password">Senha</string>
+    <string name="confirm_password">Confirmar senha</string>
     <string name="login">Login</string>
     <string name="forgot_password">Esqueceu a senha?</string>
     <string name="dont_have_an_account">Não tem uma conta? Casdastre-se!</string>
+    <string name="lets_begin">Vamos começar!</string>
+    <string name="create_an_account">Criar uma conta.</string>
+    <string name="registrer">Registar</string>
 </resources>
