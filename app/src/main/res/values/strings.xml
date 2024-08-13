@@ -12,4 +12,5 @@
     <string name="lets_begin">Vamos começar!</string>
     <string name="create_an_account">Criar uma conta.</string>
     <string name="registrer">Registar</string>
+    <string name="login_message">não encontrado</string>
 </resources>

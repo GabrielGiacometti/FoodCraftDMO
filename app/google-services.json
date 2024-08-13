@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "369392574755",
+    "project_id": "foodcraft-dmos",
+    "storage_bucket": "foodcraft-dmos.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:369392574755:android:3ff7e0e0d61d40d9f06c96",
+        "android_client_info": {
+          "package_name": "com.foodcraft"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAPs_6SO855fIgyHlJvDOetUZZ_h87apbY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
