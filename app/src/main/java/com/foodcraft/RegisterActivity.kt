@@ -32,7 +32,7 @@ class RegisterActivity : AppCompatActivity() {
 
         btnUserRegister = findViewById(R.id.button3)
         btnUserRegister.setOnClickListener {
-            if(validate()) {
+            if (validate()) {
                 val user = User(
                     email = edtEmail.text.toString(),
                     password = edtPassword.text.toString()
@@ -46,12 +46,12 @@ class RegisterActivity : AppCompatActivity() {
         }
     }
 
-    private fun validate() : Boolean {
+    private fun validate(): Boolean {
         var isValid = true
 
 
         edtEmail.apply {
-            if(text.isNullOrEmpty()) {
+            if (text.isNullOrEmpty()) {
                 error = "Preencha o campo email."
                 isValid = false
             } else {
@@ -59,7 +59,7 @@ class RegisterActivity : AppCompatActivity() {
             }
         }
         edtPassword.apply {
-            if(text.isNullOrEmpty()) {
+            if (text.isNullOrEmpty()) {
                 error = "Preencha o campo a senha."
                 isValid = false
             } else {
@@ -71,9 +71,5 @@ class RegisterActivity : AppCompatActivity() {
     }
 
 
-    override fun onSupportNavigateUp(): Boolean {
-        onBackPressed()
-        return true
-    }
 
 }
