@@ -3,6 +3,7 @@
     <string name="login_logo">Login logo</string>
     <string name="welcome_title">Bem vindo de volta!</string>
     <string name="welcome_subtitle">Sentimos sua falta.</string>
+    <string name="nome">Nome</string>
     <string name="email">Email</string>
     <string name="password">Senha</string>
     <string name="confirm_password">Confirmar senha</string>
@@ -11,6 +12,7 @@
     <string name="dont_have_an_account">Não tem uma conta? Casdastre-se!</string>
     <string name="lets_begin">Vamos começar!</string>
     <string name="create_an_account">Criar uma conta.</string>
-    <string name="registrer">Registar</string>
+    <string name="registrer">Registrar</string>
     <string name="login_message">não encontrado</string>
+    <string name="edit_profile">Salvar mudanças</string>
 </resources>

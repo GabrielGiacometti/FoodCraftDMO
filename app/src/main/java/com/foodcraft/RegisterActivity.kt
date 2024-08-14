@@ -1,5 +1,6 @@
 package com.foodcraft
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
@@ -40,11 +41,17 @@ class RegisterActivity : AppCompatActivity() {
 
                 userViewModel.createUser(user)
                 userViewModel.login(user.email, user.password).observe(this, Observer {
-                    finish()
+
                 })
             }
+            val intent = Intent(
+                this@RegisterActivity,
+                ProfileActivity::class.java
+            )
+            startActivity(intent)
         }
     }
+
 
     private fun validate(): Boolean {
         var isValid = true
