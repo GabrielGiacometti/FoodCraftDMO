@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".RecipeFoodActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="-34dp"
+        tools:layout_editor_absoluteY="85dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/foodImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="false"
+                    android:scaleType="centerCrop"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/food_image" />
+
+                <ImageButton
+                    android:id="@+id/backButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginTop="16dp"
+                    android:backgroundTint="#00FFFFFF"
+                    android:scaleX="1.5"
+                    android:scaleY="1.5"
+                    app:layout_constraintStart_toStartOf="@+id/foodImage"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/orange_back_arrow" />
+
+                <ImageView
+                    android:id="@+id/background"
+                    android:layout_width="match_parent"
+                    android:layout_height="600dp"
+                    android:layout_marginTop="220dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/rounded_top_retangle" />
+
+                <TextView
+                    android:id="@+id/timeText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="42dp"
+                    android:layout_marginBottom="36dp"
+                    android:background="@drawable/popup_green_medium"
+                    android:drawableStart="@drawable/clock_icon_small"
+                    android:drawablePadding="4dp"
+                    android:padding="8dp"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="12dp"
+                    android:text="1h30min"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/foodImage"
+                    app:layout_constraintStart_toStartOf="@+id/foodImage"
+                    app:layout_constraintTop_toTopOf="@+id/background" />
+
+                <TextView
+                    android:id="@+id/foodTypeText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginBottom="36dp"
+                    android:background="@drawable/popup_green_medium"
+                    android:drawableStart="@drawable/plate_icon_small"
+                    android:drawablePadding="4dp"
+                    android:padding="8dp"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
+                    android:text="Prato Principal"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/foodImage"
+                    app:layout_constraintStart_toEndOf="@+id/timeText"
+                    app:layout_constraintTop_toTopOf="@+id/background" />
+
+                <TextView
+                    android:id="@+id/portionText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginBottom="36dp"
+                    android:background="@drawable/popup_green_small"
+                    android:drawableStart="@drawable/person_icon_small"
+                    android:drawablePadding="4dp"
+                    android:padding="8dp"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="12dp"
+                    android:text="6"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/foodImage"
+                    app:layout_constraintStart_toEndOf="@+id/foodTypeText"
+                    app:layout_constraintTop_toTopOf="@+id/background" />
+
+                <TextView
+                    android:id="@+id/foodTitleText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="28dp"
+                    android:fontFamily="@font/kodchasan_regular"
+                    android:text="Curry de legumes"
+                    android:textColor="#393427"
+                    android:textSize="22sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="@+id/foodImage"
+                    app:layout_constraintTop_toBottomOf="@+id/foodImage" />
+
+                <ImageButton
+                    android:id="@+id/hearthButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="#00000"
+                    app:layout_constraintBottom_toBottomOf="@+id/foodTitleText"
+                    app:layout_constraintEnd_toEndOf="@+id/portionText"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toEndOf="@+id/foodTitleText"
+                    app:layout_constraintTop_toTopOf="@+id/foodTitleText"
+                    app:srcCompat="@drawable/hearth" />
+
+                <TextView
+                    android:id="@+id/descriptionFoodText"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/kodchasan_regular"
+                    android:text="A combinação entre batata-doce, cenoura e couve-flor traz a esta  preparação diferentes texturas. A explosão de sabores fica por conta do  curry, da pimenta, do coentro e das hortaliças. Pensa em um ensopado  delicioso!\n\n Ingredientes\n1 couve-flor pequena (cerca de 3 xícaras [chá] de floretes)\n2 batatas-doce\n1 cenoura\n\nModo de Preparo\n1. Descasque e pique fino a cebola. Com a lateral da faca, amasse os dentes  de alho e descasque. Lave e seque a pimenta e os ramos de coentro.  Corte a pimenta em pedaços médios (se preferir menos picância, descarte  as sementes). Corte os talos do coentro em pedaços médios, só para ficar  mais fácil de bater (reserve as folhas inteiras para a finalização).  Descasque e corte o gengibre em fatias."
+                    android:textColor="#393427"
+                    app:layout_constraintEnd_toEndOf="@+id/portionText"
+                    app:layout_constraintStart_toStartOf="@+id/foodTitleText"
+                    app:layout_constraintTop_toBottomOf="@+id/foodTitleText" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
