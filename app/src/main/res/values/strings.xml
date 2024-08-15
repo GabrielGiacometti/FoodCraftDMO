@@ -15,4 +15,7 @@
     <string name="registrer">Registrar</string>
     <string name="login_message">não encontrado</string>
     <string name="edit_profile">Salvar mudanças</string>
+    <string name="go_back">Voltar</string>
+    <string name="recipeQuantity">4</string>
+    <string name="recipes">receitas</string>
 </resources>
