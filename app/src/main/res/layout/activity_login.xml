@@ -11,10 +11,12 @@
         android:id="@+id/imageView5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:contentDescription="@string/login_logo"
-        android:src="@drawable/login_logo_menor"
-        tools:layout_editor_absoluteX="54dp" />
+        app:layout_constraintEnd_toEndOf="parent"
 
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/login_logo_menor" />
     <TextView
         android:id="@+id/welcomeTitle"
         android:layout_width="match_parent"

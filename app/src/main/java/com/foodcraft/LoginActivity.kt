@@ -61,7 +61,7 @@ class LoginActivity : AppCompatActivity() {
                 RegisterActivity::class.java
             )
             startActivity(intent)
-            finish()
+
         })
     }
 

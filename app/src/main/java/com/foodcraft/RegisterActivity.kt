@@ -1,5 +1,6 @@
 package com.foodcraft
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
@@ -32,7 +33,7 @@ class RegisterActivity : AppCompatActivity() {
 
         btnUserRegister = findViewById(R.id.button3)
         btnUserRegister.setOnClickListener {
-            if(validate()) {
+            if (validate()) {
                 val user = User(
                     email = edtEmail.text.toString(),
                     password = edtPassword.text.toString()
@@ -40,18 +41,24 @@ class RegisterActivity : AppCompatActivity() {
 
                 userViewModel.createUser(user)
                 userViewModel.login(user.email, user.password).observe(this, Observer {
-                    finish()
+
                 })
             }
+            val intent = Intent(
+                this@RegisterActivity,
+                ProfileActivity::class.java
+            )
+            startActivity(intent)
         }
     }
 
-    private fun validate() : Boolean {
+
+    private fun validate(): Boolean {
         var isValid = true
 
 
         edtEmail.apply {
-            if(text.isNullOrEmpty()) {
+            if (text.isNullOrEmpty()) {
                 error = "Preencha o campo email."
                 isValid = false
             } else {
@@ -59,7 +66,7 @@ class RegisterActivity : AppCompatActivity() {
             }
         }
         edtPassword.apply {
-            if(text.isNullOrEmpty()) {
+            if (text.isNullOrEmpty()) {
                 error = "Preencha o campo a senha."
                 isValid = false
             } else {
@@ -71,9 +78,5 @@ class RegisterActivity : AppCompatActivity() {
     }
 
 
-    override fun onSupportNavigateUp(): Boolean {
-        onBackPressed()
-        return true
-    }
 
 }
