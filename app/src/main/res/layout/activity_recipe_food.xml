@@ -140,14 +140,13 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/kodchasan_regular"
-                    android:text="A combinação entre batata-doce, cenoura e couve-flor traz a esta  preparação diferentes texturas. A explosão de sabores fica por conta do  curry, da pimenta, do coentro e das hortaliças. Pensa em um ensopado  delicioso!"
+                    android:text="A combinação entre batata-doce, cenoura e couve-flor traz a esta preparação diferentes texturas. A explosão de sabores fica por conta do curry, da pimenta, do coentro e das hortaliças. Pensa em um ensopado delicioso!"
                     android:textColor="#393427"
                     app:layout_constraintEnd_toEndOf="@+id/portionText"
                     app:layout_constraintStart_toStartOf="@+id/foodTitleText"
                     app:layout_constraintTop_toBottomOf="@+id/foodTitleText" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
-
         </LinearLayout>
     </ScrollView>
 

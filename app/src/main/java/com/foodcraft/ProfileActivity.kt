@@ -26,45 +26,20 @@ class ProfileActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
+        setBtnNewUser()
 
-    }
-
-    private fun setBtnLoginUser() {
-        edtEmail = findViewById(R.id.editTextTextEmailAddress)
-        edtPassword = findViewById(R.id.editTextTextPassword2)
-        btnLoginUser = findViewById(R.id.button2)
-        btnLoginUser.setOnClickListener {
-            userViewModel.login(edtEmail.text.toString(), edtPassword.text.toString()).observe(this, Observer {
-                if(it == null)
-                    Toast.makeText(applicationContext, getString(R.string.login_message), Toast.LENGTH_SHORT).show()
-                else {
-                    intent = Intent(
-                        this@ProfileActivity,
-                        RegisterActivity::class.java
-                    )
-                    startActivity(intent)
-                    finish()
-                }
-            })
-        }
     }
 
     private fun setBtnNewUser() {
-        val btnNewUser = findViewById<TextView>(R.id.textView3)
+        val btnNewUser = findViewById<TextView>(R.id.button3)
         btnNewUser.setOnClickListener(View.OnClickListener {
             val intent = Intent(
                 this@ProfileActivity,
-                RegisterActivity::class.java
+                RecipeFoodActivity::class.java
             )
             startActivity(intent)
 
         })
     }
 
-
-
-    override fun onSupportNavigateUp(): Boolean {
-        onBackPressed()
-        return true
-    }
 }
