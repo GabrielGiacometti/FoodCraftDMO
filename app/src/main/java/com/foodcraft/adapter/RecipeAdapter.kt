@@ -1,5 +1,6 @@
 package com.foodcraft.adapter
 
+import android.util.Log
 import com.foodcraft.R
 import android.view.LayoutInflater
 import android.view.View
@@ -18,9 +19,9 @@ class RecipeAdapter(private val recipes: List<RecipeModel>) : RecyclerView.Adapt
 
         fun bind(recipe: RecipeModel) {
             textViewRecipeTitle.text = recipe.name
-
+            Log.d("RecipeAdapter", "Image URL: ${recipe.imageUrl}")
             Glide.with(itemView.context)
-                .load(recipe.image)
+                .load(recipe.imageUrl)
                 .into(imageRecipe)
         }
     }
