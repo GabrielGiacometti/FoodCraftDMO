@@ -68,6 +68,7 @@ dependencies {
     implementation(libs.firebase.database) // <- Linha do stash
     implementation(libs.androidx.room.common)
     implementation(libs.volley)
+    implementation(libs.androidx.room.common)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

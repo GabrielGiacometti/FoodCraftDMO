@@ -127,7 +127,6 @@
                     android:id="@+id/hearthButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@null"
                     app:layout_constraintBottom_toBottomOf="@+id/foodTitleText"
                     app:layout_constraintEnd_toEndOf="@+id/portionText"
                     app:layout_constraintHorizontal_bias="1.0"
