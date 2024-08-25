@@ -13,9 +13,8 @@ class RecipeFoodActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_recipe_food)
-
         setBtnBack()
-        setBtnNewUser()
+
     }
 
      private fun setBtnBack() {
@@ -29,14 +28,5 @@ class RecipeFoodActivity : AppCompatActivity() {
          }
      }
 
-     private fun setBtnNewUser() {
-        val btnNewUser = findViewById<TextView>(R.id.textView3)
-         btnNewUser.setOnClickListener {
-             val intent = Intent(
-                 this@RecipeFoodActivity,
-                 RegisterActivity::class.java
-             )
-             startActivity(intent)
-         }
-    }
+
 }
