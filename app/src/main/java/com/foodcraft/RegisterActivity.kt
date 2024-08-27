@@ -41,15 +41,12 @@ class RegisterActivity : AppCompatActivity() {
 
                 userViewModel.createUser(user)
                 userViewModel.login(user.email, user.password).observe(this, Observer {
-
+                    finish()
                 })
+
             }
-            val intent = Intent(
-                this@RegisterActivity,
-                ProfileActivity::class.java
-            )
-            startActivity(intent)
         }
+
     }
 
 

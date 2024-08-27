@@ -9,21 +9,17 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
+import com.foodcraft.repository.CurrentUserSingleton
 import com.foodcraft.viewmodel.UserViewModel
-import com.google.android.material.textfield.TextInputEditText
 
 
 class LoginActivity : AppCompatActivity() {
 
-    lateinit var toolbar: Toolbar
-    lateinit var txtTitle: TextView
-    lateinit var btnNewUser: Button
     lateinit var btnLoginUser: Button
     lateinit var edtEmail: EditText
     lateinit var edtPassword: EditText
-
     private val userViewModel by viewModels<UserViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,13 +34,19 @@ class LoginActivity : AppCompatActivity() {
         edtPassword = findViewById(R.id.editTextTextPassword2)
         btnLoginUser = findViewById(R.id.button2)
         btnLoginUser.setOnClickListener {
-            userViewModel.login(edtEmail.text.toString(), edtPassword.text.toString()).observe(this, Observer {
-                if(it == null)
-                    Toast.makeText(applicationContext, getString(R.string.login_message), Toast.LENGTH_SHORT).show()
-                else {
+            userViewModel.login(edtEmail.text.toString(), edtPassword.text.toString()).observe(this, Observer {user ->
+                if(user == null) {
+                    Toast.makeText(
+                        applicationContext,
+                        getString(R.string.login_message),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    return@Observer
+                }else {
+                    CurrentUserSingleton.setUser(user)
                     intent = Intent(
                         this@LoginActivity,
-                        RegisterActivity::class.java
+                        PrincipalActivity::class.java
                     )
                     startActivity(intent)
                     finish()
@@ -61,7 +63,6 @@ class LoginActivity : AppCompatActivity() {
                 RegisterActivity::class.java
             )
             startActivity(intent)
-
         })
     }
 

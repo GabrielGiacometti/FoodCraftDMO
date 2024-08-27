@@ -11,7 +11,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.foodcraft.model.RecipeModel
 
-class RecipeAdapter(private val recipes: List<RecipeModel>) : RecyclerView.Adapter<RecipeAdapter.ViewHolder>() {
+class RecipeAdapter(private var recipes: List<RecipeModel>) : RecyclerView.Adapter<RecipeAdapter.ViewHolder>() {
+    private var originalRecipes: List<RecipeModel> = recipes
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val textViewRecipeTitle: TextView = itemView.findViewById(R.id.textViewRecipeTitle)
@@ -21,13 +22,14 @@ class RecipeAdapter(private val recipes: List<RecipeModel>) : RecyclerView.Adapt
             textViewRecipeTitle.text = recipe.name
             Log.d("RecipeAdapter", "Image URL: ${recipe.imageUrl}")
             Glide.with(itemView.context)
-                .load(recipe.imageUrl)
+                .load(recipe.imageUrl.trim())
                 .into(imageRecipe)
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.recycler_view_recipes, parent, false)
+        val view = LayoutInflater.from(parent.context)
+            .inflate(R.layout.recycler_view_recipes, parent, false)
         return ViewHolder(view)
     }
 
@@ -37,4 +39,16 @@ class RecipeAdapter(private val recipes: List<RecipeModel>) : RecyclerView.Adapt
     }
 
     override fun getItemCount(): Int = recipes.size
+    fun filter(query: String) {
+        recipes = if (query.isEmpty()) {
+            originalRecipes
+        } else {
+            originalRecipes.filter { recipe ->
+                recipe.recipeIngredient.any { ingredient ->
+                    ingredient.lowercase().contains(query)
+                }
+            }
+        }
+        notifyDataSetChanged()
+    }
 }

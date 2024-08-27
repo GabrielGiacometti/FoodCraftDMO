@@ -17,7 +17,7 @@ import org.json.JSONObject
 class UserRepository (application: Application) {
 
     private val firestore = FirebaseFirestore.getInstance()
-
+    private val userLiveData = MutableLiveData<User>()
     private val queue = Volley.newRequestQueue(application)
 
     private val preference = PreferenceManager.getDefaultSharedPreferences(application)
@@ -106,6 +106,11 @@ class UserRepository (application: Application) {
 
         return liveData
     }
+    fun setUser(user: User) {
+        userLiveData.value = user
+    }
+
+    fun getUser(): LiveData<User> = userLiveData
 
 
     fun update(user: User) : Boolean {
