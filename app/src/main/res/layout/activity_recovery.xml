@@ -8,6 +8,25 @@
     android:background="@drawable/backgroundradial"
     tools:context=".RecoveryActivity">
 
+    <Button
+        android:id="@+id/backButton2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="28dp"
+        android:background="@drawable/popup_green_medium"
+        android:drawableStart="@drawable/back_arrow_green"
+        android:drawablePadding="6dp"
+        android:fontFamily="@font/kodchasan_regular"
+        android:padding="8dp"
+        android:text="Voltar"
+        android:textColor="#617A55"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <ImageView
         android:id="@+id/imageViewLogo"
         android:layout_width="wrap_content"
