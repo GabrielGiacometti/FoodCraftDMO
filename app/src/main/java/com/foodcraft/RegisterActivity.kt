@@ -67,7 +67,7 @@ class RegisterActivity : AppCompatActivity() {
         }
         edtPassword.apply {
             if (text.isNullOrEmpty()) {
-                error = "Preencha o campo a senha."
+                error = "Preencha o campo senha."
                 isValid = false
             } else {
                 error = null
@@ -75,7 +75,7 @@ class RegisterActivity : AppCompatActivity() {
         }
         edtConfirmPassword.apply {
             if (text.isNullOrEmpty()) {
-                error = "Preencha o campo a senha."
+                error = "Preencha o campo confirmar senha."
                 isValid = false
             }else if (confirmPassword != password) {
                 error = "A confirmação da senha não confere."

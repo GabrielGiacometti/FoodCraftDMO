@@ -34,24 +34,27 @@ class LoginActivity : AppCompatActivity() {
         edtPassword = findViewById(R.id.editTextTextPassword2)
         btnLoginUser = findViewById(R.id.button2)
         btnLoginUser.setOnClickListener {
-            userViewModel.login(edtEmail.text.toString(), edtPassword.text.toString()).observe(this, Observer {user ->
-                if(user == null) {
-                    Toast.makeText(
-                        applicationContext,
-                        getString(R.string.login_message),
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    return@Observer
-                }else {
-                    CurrentUserSingleton.setUser(user)
-                    intent = Intent(
-                        this@LoginActivity,
-                        PrincipalActivity::class.java
-                    )
-                    startActivity(intent)
-                    finish()
-                }
-            })
+            if (validate()) {
+                userViewModel.login(edtEmail.text.toString(), edtPassword.text.toString())
+                    .observe(this, Observer { user ->
+                        if (user == null) {
+                            Toast.makeText(
+                                applicationContext,
+                                getString(R.string.login_message),
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            return@Observer
+                        } else {
+                            CurrentUserSingleton.setUser(user)
+                            intent = Intent(
+                                this@LoginActivity,
+                                PrincipalActivity::class.java
+                            )
+                            startActivity(intent)
+                            finish()
+                        }
+                    })
+            }
         }
     }
 
@@ -66,7 +69,27 @@ class LoginActivity : AppCompatActivity() {
         })
     }
 
+    private fun validate(): Boolean {
+        var isValid = true
 
+        edtEmail.apply {
+            if (text.isNullOrEmpty()) {
+                error = "Preencha o campo email."
+                isValid = false
+            } else {
+                error = null
+            }
+        }
+        edtPassword.apply {
+            if (text.isNullOrEmpty()) {
+                error = "Preencha o campo senha."
+                isValid = false
+            } else {
+                error = null
+            }
+        }
+        return isValid
+    }
 
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
