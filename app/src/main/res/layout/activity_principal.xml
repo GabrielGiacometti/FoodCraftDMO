@@ -12,9 +12,12 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:hint="Digite um ingrediente"
+        android:background="@drawable/background_rectangle_green"
         android:layout_marginStart="32dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="16dp"
+        android:textColor="@color/dark_green"
+        android:paddingStart="16dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/buttonAddIngredients" />
@@ -24,6 +27,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@android:drawable/ic_input_add"
+        android:background="@null"
+        android:scaleX="2"
+        android:scaleY="2"
         android:contentDescription="description_add_button"
         android:layout_marginEnd="32dp"
         app:layout_constraintTop_toTopOf="@+id/editTextIngredients"
@@ -40,11 +46,11 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewRecipes"
+        app.layout_constraintBottom_toBottomOf="parent"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         app:layout_constraintTop_toBottomOf="@+id/textViewListIngredients"
-        tools:listitem="@layout/recycler_view_recipes"
-        app.layout_constraintBottom_toBottomOf="parent" />
+        tools:listitem="@layout/recycler_view_recipes" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

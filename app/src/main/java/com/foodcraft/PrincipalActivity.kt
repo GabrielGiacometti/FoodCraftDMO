@@ -14,6 +14,7 @@ import android.widget.ImageButton
 import android.widget.ListView
 import android.widget.SearchView
 import androidx.appcompat.app.AlertDialog
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.foodcraft.database.IngredientList
 
@@ -44,7 +45,7 @@ class PrincipalActivity : AppCompatActivity() {
     private fun setupRecyclerView() {
         recipeAdapter = RecipeAdapter(emptyList())
         recyclerView.adapter = recipeAdapter
-        recyclerView.layoutManager = LinearLayoutManager(this)
+        recyclerView.layoutManager = GridLayoutManager(this, 2)
 
         val recipeRepository = RecipeRepository()
         recipeRepository.getRecipes(

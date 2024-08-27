@@ -3,7 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
+    android:layout_marginStart="18dp"
+    android:layout_marginEnd="14dp"
+    android:layout_marginTop="16dp"
     android:layout_weight="1"
     app:cardCornerRadius="16dp">
 
@@ -19,7 +21,7 @@
             <ImageView
                 android:id="@+id/imageRecipe"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="150dp"
                 android:scaleType="centerCrop"
                 android:src="@drawable/salada_de_chuchu"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -33,7 +35,11 @@
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="16dp"
                 android:padding="16dp"
-                android:src="@drawable/hearth"
+                android:src="@drawable/hearth_active"
+                android:background="@null"
+                android:scaleX="2"
+                android:scaleY="2"
+                android:outlineAmbientShadowColor="@color/black"
                 app:layout_constraintBottom_toBottomOf="@+id/imageRecipe"
                 app:layout_constraintEnd_toEndOf="@+id/imageRecipe"
                 app:layout_constraintHorizontal_bias="1.0"
@@ -52,10 +58,13 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:fontFamily="@font/kodchasan_regular"
-                android:padding="16dp"
+                android:padding="6dp"
                 android:text="Salada de chuchu na panela de pressão elétrica"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:textColor="@color/brown"
+                android:gravity="start"
+                android:background="@null"/>
 
         </LinearLayout>
 
