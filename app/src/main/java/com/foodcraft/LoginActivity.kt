@@ -9,7 +9,6 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import com.foodcraft.repository.CurrentUserSingleton
 import com.foodcraft.viewmodel.UserViewModel
@@ -18,6 +17,7 @@ import com.foodcraft.viewmodel.UserViewModel
 class LoginActivity : AppCompatActivity() {
 
     lateinit var btnLoginUser: Button
+    lateinit var edtRecovery: TextView
     lateinit var edtEmail: EditText
     lateinit var edtPassword: EditText
     private val userViewModel by viewModels<UserViewModel>()
@@ -25,6 +25,7 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+        setBtnRecovery()
         setBtnNewUser()
         setBtnLoginUser()
     }
@@ -64,6 +65,17 @@ class LoginActivity : AppCompatActivity() {
             val intent = Intent(
                 this@LoginActivity,
                 RegisterActivity::class.java
+            )
+            startActivity(intent)
+        })
+    }
+
+    private fun setBtnRecovery() {
+        edtRecovery = findViewById<TextView>(R.id.textViewRecovery)
+        edtRecovery.setOnClickListener(View.OnClickListener {
+            val intent = Intent(
+                this@LoginActivity,
+                RecoveryActivity::class.java
             )
             startActivity(intent)
         })

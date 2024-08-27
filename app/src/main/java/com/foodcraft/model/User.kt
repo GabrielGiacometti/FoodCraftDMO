@@ -15,7 +15,6 @@ data class User (
     val image: String?= null) : Serializable {
 
 
-    // Construtor secundário sem parâmetros
     @Ignore
     constructor() : this("", "", null, "", null)
 }

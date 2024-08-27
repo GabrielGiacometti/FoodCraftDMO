@@ -7,7 +7,7 @@ data class RecipeModel(
     val recipeIngredient: List<String>,
     val recipeInstructions: List<String>,
     val totalTime: Long? = null,
-//    val recipeYield: Int,
+    val recipeYield: Int,
     val recipeCategory: List<String>,
     val recipeCuisine: List<String>,
 
@@ -18,6 +18,7 @@ data class RecipeModel(
         description = "",
         recipeIngredient = emptyList(),
         recipeInstructions = emptyList(),
+        recipeYield = 0,
         totalTime = null,
         recipeCategory = emptyList(),
         recipeCuisine = emptyList()
