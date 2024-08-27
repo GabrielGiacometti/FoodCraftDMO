@@ -21,4 +21,8 @@
     <string name="escolha_ingredientes">Escola os ingredientes</string>
     <string name="cancel">Cancelar</string>
     <string name="add">Adicionar</string>
+    <string name="recovery_main">Recuperar senha</string>
+    <string name="recovery_message">Para redefinir sua senha, informe o e-mail usado no cadastro
+    da sua conta e lhe enviaremos um link com as instruções.</string>
+    <string name="recovery_link">Enviar link de recuperação</string>
 </resources>
