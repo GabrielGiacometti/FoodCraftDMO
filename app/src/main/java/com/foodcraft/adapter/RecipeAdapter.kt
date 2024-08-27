@@ -1,5 +1,6 @@
 package com.foodcraft.adapter
 
+import android.annotation.SuppressLint
 import android.util.Log
 import com.foodcraft.R
 import android.view.LayoutInflater
@@ -39,13 +40,18 @@ class RecipeAdapter(private var recipes: List<RecipeModel>) : RecyclerView.Adapt
     }
 
     override fun getItemCount(): Int = recipes.size
+    @SuppressLint("NotifyDataSetChanged")
     fun filter(query: String) {
-        recipes = if (query.isEmpty()) {
+        val queries = query.split(",").map { it.trim().lowercase() }
+
+        recipes = if (queries.isEmpty() || queries.all { it.isEmpty() }) {
             originalRecipes
         } else {
             originalRecipes.filter { recipe ->
-                recipe.recipeIngredient.any { ingredient ->
-                    ingredient.lowercase().contains(query)
+                queries.all { query ->
+                    recipe.recipeIngredient.any { ingredient ->
+                        ingredient.contains(query)
+                    }
                 }
             }
         }

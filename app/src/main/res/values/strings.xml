@@ -18,4 +18,7 @@
     <string name="go_back">Voltar</string>
     <string name="recipeQuantity">4</string>
     <string name="recipes">receitas</string>
+    <string name="escolha_ingredientes">Escola os ingredientes</string>
+    <string name="cancel">Cancelar</string>
+    <string name="add">Adicionar</string>
 </resources>
