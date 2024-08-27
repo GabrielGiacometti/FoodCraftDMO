@@ -132,7 +132,7 @@
                     app:layout_constraintHorizontal_bias="1.0"
                     app:layout_constraintStart_toEndOf="@+id/foodTitleText"
                     app:layout_constraintTop_toTopOf="@+id/foodTitleText"
-                    app:srcCompat="@drawable/hearth" />
+                    app:srcCompat="@drawable/hearth_active" />
 
                 <TextView
                     android:id="@+id/descriptionFoodText"
