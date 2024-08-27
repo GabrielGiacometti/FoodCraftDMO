@@ -15,6 +15,7 @@ import android.widget.ListView
 import android.widget.SearchView
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.foodcraft.database.IngredientList
 
 
 class PrincipalActivity : AppCompatActivity() {
@@ -75,7 +76,7 @@ class PrincipalActivity : AppCompatActivity() {
     }
 
     private fun showIngredientDialog(editText: EditText) {
-        val ingredients = listOf("Tomate", "Cebola", "Alho", "Pimentão", "Queijo")
+        val ingredients = IngredientList.ingredients
         val selectedIngredients = mutableListOf<String>()
 
         val dialogView = layoutInflater.inflate(R.layout.dialog_ingredient_selector, null)

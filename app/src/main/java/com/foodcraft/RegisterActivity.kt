@@ -16,6 +16,7 @@ class RegisterActivity : AppCompatActivity() {
     lateinit var edtName: TextInputEditText
     lateinit var edtEmail: EditText
     lateinit var edtPassword: EditText
+    lateinit var edtConfirmPassword: EditText
     lateinit var btnUserRegister: Button
 
     private val userViewModel by viewModels<UserViewModel>()
@@ -30,7 +31,7 @@ class RegisterActivity : AppCompatActivity() {
     private fun setBtnUserRegister() {
         edtEmail = findViewById(R.id.editTextTextEmailAddress2)
         edtPassword = findViewById(R.id.editTextTextPassword)
-
+        edtConfirmPassword = findViewById(R.id.editTextTextConfirmPassword)
         btnUserRegister = findViewById(R.id.button3)
         btnUserRegister.setOnClickListener {
             if (validate()) {
@@ -51,6 +52,8 @@ class RegisterActivity : AppCompatActivity() {
 
 
     private fun validate(): Boolean {
+        val password = edtPassword.text.toString()
+        val confirmPassword = edtConfirmPassword.text.toString()
         var isValid = true
 
 
@@ -67,6 +70,18 @@ class RegisterActivity : AppCompatActivity() {
                 error = "Preencha o campo a senha."
                 isValid = false
             } else {
+                error = null
+            }
+        }
+        edtConfirmPassword.apply {
+            if (text.isNullOrEmpty()) {
+                error = "Preencha o campo a senha."
+                isValid = false
+            }else if (confirmPassword != password) {
+                error = "A confirmação da senha não confere."
+                isValid = false
+            }
+            else {
                 error = null
             }
         }
