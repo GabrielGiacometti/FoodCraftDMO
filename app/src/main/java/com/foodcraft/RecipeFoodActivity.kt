@@ -18,13 +18,16 @@ class RecipeFoodActivity : AppCompatActivity() {
         val recipeName = intent.getStringExtra("RECIPE_NAME")
         val recipeImage = intent.getStringExtra("RECIPE_IMAGE")?.trim()
         val recipeDescription = intent.getStringExtra("RECIPE_DESCRIPTION")
+        val recipeIngredient = intent.getStringExtra("RECIPE_INGREDIENTS")
+        val recipeInstructions = intent.getStringExtra("RECIPE_INSTRUCTIONS")
 
         findViewById<TextView>(R.id.foodTitleText).text = recipeName
         Glide.with(this)
             .load(recipeImage)
             .into(findViewById(R.id.foodImage))
         findViewById<TextView>(R.id.descriptionFoodText).text = recipeDescription
-
+        findViewById<TextView>(R.id.ingredientsDescription).text = recipeIngredient
+        findViewById<TextView>(R.id.prepareDescription).text = recipeInstructions
     }
 
 
