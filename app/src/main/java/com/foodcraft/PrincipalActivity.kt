@@ -12,6 +12,7 @@ import android.widget.ListView
 import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.SearchView
+import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
@@ -38,10 +39,16 @@ class PrincipalActivity : AppCompatActivity() {
         setupRecyclerView()
         setupEditTextFilter()
         setupButtonAddIngredients()
-        setBtnProfile()
+        setupButtonProfile()
     }
 
-    private fun setBtnProfile() {
+    private fun initializeViews() {
+        editTextFilter = findViewById(R.id.editTextIngredients)
+        recyclerView = findViewById(R.id.recyclerViewRecipes)
+        buttonAddIngredients = findViewById(R.id.buttonAddIngredients)
+    }
+
+    private fun setupButtonProfile() {
         buttonProfile = findViewById(R.id.avatarImage)
         buttonProfile.setOnClickListener(View.OnClickListener {
             val intent = Intent(
@@ -50,12 +57,6 @@ class PrincipalActivity : AppCompatActivity() {
             )
             startActivity(intent)
         })
-    }
-
-    private fun initializeViews() {
-        editTextFilter = findViewById(R.id.editTextIngredients)
-        recyclerView = findViewById(R.id.recyclerViewRecipes)
-        buttonAddIngredients = findViewById(R.id.buttonAddIngredients)
     }
 
     private fun setupRecyclerView() {
@@ -107,11 +108,11 @@ class PrincipalActivity : AppCompatActivity() {
 
         recipeRepository.getRecipes(
             onSuccess = { recipes ->
-                val filteredRecipes = if (filterText.isEmpty()) {
+                val filteredRecipes = if (queries.isEmpty()) {
                     recipes
                 } else {
                     recipes.filter { recipe ->
-                        queries.any { query ->
+                        queries.all { query ->
                             recipe.recipeIngredient.any { ingredient ->
                                 ingredient.lowercase().contains(query)
                             }
@@ -137,11 +138,13 @@ class PrincipalActivity : AppCompatActivity() {
         listView.choiceMode = ListView.CHOICE_MODE_MULTIPLE
 
         listView.setOnItemClickListener { _, _, position, _ ->
-            val selectedItem = ingredients[position]
-            if (listView.isItemChecked(position)) {
-                selectedIngredients.add(selectedItem)
-            } else {
-                selectedIngredients.remove(selectedItem)
+            val selectedItem = adapter.getItem(position)
+            if (selectedItem != null) {
+                if (listView.isItemChecked(position)) {
+                    selectedIngredients.add(selectedItem)
+                } else {
+                    selectedIngredients.remove(selectedItem)
+                }
             }
         }
 
