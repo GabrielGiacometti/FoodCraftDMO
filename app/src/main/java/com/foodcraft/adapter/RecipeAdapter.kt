@@ -36,6 +36,7 @@ class RecipeAdapter(
             }
         }
     }
+    @SuppressLint("NotifyDataSetChanged")
     fun updateRecipes(newRecipes: List<RecipeModel>) {
         recipes = newRecipes
         notifyDataSetChanged()
@@ -57,19 +58,21 @@ class RecipeAdapter(
 
     @SuppressLint("NotifyDataSetChanged")
     fun filter(query: String) {
-        val queries = query.split(",").map { it.trim().lowercase() }
+        val queries = query.split(",").map { it.trim().lowercase() }.filter { it.isNotEmpty() }
 
-        recipes = if (queries.isEmpty() || queries.all { it.isEmpty() }) {
+
+        recipes = if (queries.isEmpty()) {
             originalRecipes
         } else {
             originalRecipes.filter { recipe ->
-                queries.all { query ->
+                queries.any { query ->
                     recipe.recipeIngredient.any { ingredient ->
-                        ingredient.contains(query)
+                        ingredient.lowercase().contains(query)
                     }
                 }
             }
         }
         notifyDataSetChanged()
     }
+
 }

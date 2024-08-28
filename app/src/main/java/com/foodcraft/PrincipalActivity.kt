@@ -26,24 +26,13 @@ class PrincipalActivity : AppCompatActivity() {
     private lateinit var recipeAdapter: RecipeAdapter
     private lateinit var editTextFilter: EditText
     private lateinit var buttonAddIngredients: ImageButton
+    private lateinit var recipeRepository: RecipeRepository
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_principal)
-
-        initializeViews()
-        setupRecyclerView()
-        setupEditTextFilter()
-        setupButtonAddIngredients()
-    }
-
-    private fun initializeViews() {
-        editTextFilter = findViewById(R.id.editTextIngredients)
-        recyclerView = findViewById(R.id.recyclerViewRecipes)
-        buttonAddIngredients = findViewById(R.id.buttonAddIngredients)
-    }
-    private fun setupRecyclerView() {
-
+        recipeRepository = RecipeRepository()
         recipeAdapter = RecipeAdapter(emptyList()) { selectedRecipe ->
             val intent = Intent(this, RecipeFoodActivity::class.java).apply {
                 putExtra("RECIPE_NAME", selectedRecipe.name)
@@ -58,6 +47,18 @@ class PrincipalActivity : AppCompatActivity() {
             }
             startActivity(intent)
         }
+        initializeViews()
+        setupRecyclerView()
+        setupEditTextFilter()
+        setupButtonAddIngredients()
+    }
+
+    private fun initializeViews() {
+        editTextFilter = findViewById(R.id.editTextIngredients)
+        recyclerView = findViewById(R.id.recyclerViewRecipes)
+        buttonAddIngredients = findViewById(R.id.buttonAddIngredients)
+    }
+    private fun setupRecyclerView() {
 
         recyclerView.adapter = recipeAdapter
         recyclerView.layoutManager = GridLayoutManager(this, 2)
@@ -78,10 +79,26 @@ class PrincipalActivity : AppCompatActivity() {
     private fun setupEditTextFilter() {
         editTextFilter.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 val filterText = s.toString().trim().lowercase()
-                recipeAdapter.filter(filterText)
+
+
+                recipeRepository.getRecipes(
+                    onSuccess = { recipes ->
+
+                        val filteredRecipes = recipes.filter { recipe ->
+                            recipe.name.lowercase().contains(filterText)
+                        }
+
+                        recipeAdapter.updateRecipes(filteredRecipes)
+                    },
+                    onError = { error ->
+                        Log.e("RecipeRepository", "Error getting recipes:", error.toException())
+                    }
+                )
             }
+
             override fun afterTextChanged(s: Editable?) {}
         })
     }
