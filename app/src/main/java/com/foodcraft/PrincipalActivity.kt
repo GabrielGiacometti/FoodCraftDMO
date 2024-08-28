@@ -1,5 +1,6 @@
 package com.foodcraft
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.TextWatcher
 import androidx.appcompat.app.AppCompatActivity
@@ -41,23 +42,38 @@ class PrincipalActivity : AppCompatActivity() {
         recyclerView = findViewById(R.id.recyclerViewRecipes)
         buttonAddIngredients = findViewById(R.id.buttonAddIngredients)
     }
-
     private fun setupRecyclerView() {
-        recipeAdapter = RecipeAdapter(emptyList())
+
+        recipeAdapter = RecipeAdapter(emptyList()) { selectedRecipe ->
+            val intent = Intent(this, RecipeFoodActivity::class.java).apply {
+                putExtra("RECIPE_NAME", selectedRecipe.name)
+                putExtra("RECIPE_IMAGE", selectedRecipe.imageUrl)
+                putExtra("RECIPE_DESCRIPTION", selectedRecipe.description)
+                putExtra("RECIPE_INGREDIENTS", selectedRecipe.recipeIngredient.toTypedArray())
+                putExtra("RECIPE_INSTRUCTIONS", selectedRecipe.recipeInstructions.toTypedArray())
+                putExtra("TOTAL_TIME", selectedRecipe.totalTime)
+                putExtra("RECIPE_YIELD", selectedRecipe.recipeYield)
+                putExtra("RECIPE_CATEGORY", selectedRecipe.recipeCategory.toTypedArray())
+                putExtra("RECIPE_CUISINE", selectedRecipe.recipeCuisine.toTypedArray())
+            }
+            startActivity(intent)
+        }
+
         recyclerView.adapter = recipeAdapter
         recyclerView.layoutManager = GridLayoutManager(this, 2)
+
 
         val recipeRepository = RecipeRepository()
         recipeRepository.getRecipes(
             onSuccess = { recipes ->
-                recipeAdapter = RecipeAdapter(recipes)
-                recyclerView.adapter = recipeAdapter
+                recipeAdapter.updateRecipes(recipes)
             },
             onError = { error ->
                 Log.e("RecipeRepository", "Error getting recipes:", error.toException())
             }
         )
     }
+
 
     private fun setupEditTextFilter() {
         editTextFilter.addTextChangedListener(object : TextWatcher {
@@ -107,7 +123,7 @@ class PrincipalActivity : AppCompatActivity() {
         })
 
         val builder = AlertDialog.Builder(this)
-        builder.setTitle(R.string.escolha_ingredientes) // Strings should be in resource files
+        builder.setTitle(R.string.escolha_ingredientes)
         builder.setView(dialogView)
         builder.setPositiveButton(R.string.add) { _, _ ->
             val selectedText = selectedIngredients.joinToString(", ")

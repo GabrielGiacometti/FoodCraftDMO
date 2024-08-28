@@ -12,7 +12,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.foodcraft.model.RecipeModel
 
-class RecipeAdapter(private var recipes: List<RecipeModel>) : RecyclerView.Adapter<RecipeAdapter.ViewHolder>() {
+class RecipeAdapter(
+    private var recipes: List<RecipeModel>,
+    private val onItemClick: (RecipeModel) -> Unit
+) : RecyclerView.Adapter<RecipeAdapter.ViewHolder>() {
+
     private var originalRecipes: List<RecipeModel> = recipes
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -25,8 +29,18 @@ class RecipeAdapter(private var recipes: List<RecipeModel>) : RecyclerView.Adapt
             Glide.with(itemView.context)
                 .load(recipe.imageUrl.trim())
                 .into(imageRecipe)
+
+
+            itemView.setOnClickListener {
+                onItemClick(recipe)
+            }
         }
     }
+    fun updateRecipes(newRecipes: List<RecipeModel>) {
+        recipes = newRecipes
+        notifyDataSetChanged()
+    }
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -40,6 +54,7 @@ class RecipeAdapter(private var recipes: List<RecipeModel>) : RecyclerView.Adapt
     }
 
     override fun getItemCount(): Int = recipes.size
+
     @SuppressLint("NotifyDataSetChanged")
     fun filter(query: String) {
         val queries = query.split(",").map { it.trim().lowercase() }
