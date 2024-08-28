@@ -11,91 +11,84 @@ import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import org.json.JSONObject
 
 class UserRepository (application: Application) {
 
     private val firestore = FirebaseFirestore.getInstance()
-    private val userLiveData = MutableLiveData<User>()
+
+    private val queue = Volley.newRequestQueue(application)
 
     private val preference = PreferenceManager.getDefaultSharedPreferences(application)
 
     fun login(email: String, password: String): LiveData<User> {
+
         val liveData = MutableLiveData<User>(null)
 
+        val params = JSONObject().also {
+            it.put("email", email)
+            it.put("password", password)
+            it.put("returnSecureToken", true)
+        }
 
-        FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
+        val request = JsonObjectRequest(
+            Request.Method.POST, BASE_URL + SIGNIN + KEY, params, Response.Listener { response ->
+                val localId = response.getString("localId")
+                val idToken = response.getString("idToken")
 
-                    val user = FirebaseAuth.getInstance().currentUser
-                    val localId = user?.uid
-                    val idToken = task.result?.user?.getIdToken(false)?.result?.token
+                firestore.collection("user")
+                    .document(localId).get().addOnSuccessListener {
+                        val user = it.toObject(User::class.java)
+                        user?.id = localId
+                        user?.password = idToken
 
-                    if (localId != null && idToken != null) {
+                        liveData.value = user
 
-                        FirebaseFirestore.getInstance().collection("user")
-                            .document(localId).get()
-                            .addOnSuccessListener { documentSnapshot ->
-                                val userData = documentSnapshot.toObject(User::class.java)
-                                userData?.id = localId
-                                userData?.password = idToken //
+                        preference.edit().putString(UserViewModel.USER_ID, localId).apply()
 
-                                liveData.value = userData
-
-
-                                preference.edit().putString(UserViewModel.USER_ID, localId).apply()
-
-
-                                FirebaseFirestore.getInstance().collection("user")
-                                    .document(localId).set(userData!!)
-                            }
-                            .addOnFailureListener { e ->
-                                Log.e(this.toString(), "Erro ao recuperar os dados do Firestore", e)
-                            }
+                        firestore.collection("user")
+                            .document(localId).set(user!!)
                     }
-                } else {
-                    Log.e(this.toString(), "Erro ao fazer login: ${task.exception?.message}")
-                }
+            }, Response.ErrorListener { error ->
+                Log.e(this.toString(), error.message ?: "Error")
             }
+        )
+
+        queue.add(request)
 
         return liveData
     }
 
-
     fun createUser(user: User) {
 
-        FirebaseAuth.getInstance().createUserWithEmailAndPassword(user.email, user.password)
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
+        val params = JSONObject().also {
+            it.put("email", user.email)
+            it.put("password", user.password)
+            it.put("returnSecureToken", true)
+        }
 
-                    val firebaseUser = FirebaseAuth.getInstance().currentUser
-                    val localId = firebaseUser?.uid
-                    val idToken = task.result?.user?.getIdToken(false)?.result?.token
+        val request = JsonObjectRequest(Request.Method.POST,
+            BASE_URL + SIGNUP + KEY,
+            params,
+            Response.Listener { response ->
+                user.id = response.getString("localId")
+                user.password = response.getString("idToken")
 
-                    if (localId != null && idToken != null) {
-                        user.id = localId
-                        user.password = idToken
-
-                        FirebaseFirestore.getInstance().collection("user")
-                            .document(localId).set(user)
-                            .addOnSuccessListener {
-                                Log.d(this.toString(), "Usuário ${user.email} cadastrado com sucesso.")
-                            }
-                            .addOnFailureListener { e ->
-                                Log.e(this.toString(), "Erro ao salvar usuário no Firestore", e)
-                            }
+                firestore.collection("user")
+                    .document(user.id).set(user).addOnSuccessListener {
+                        Log.d(this.toString(), "Usuário ${user.email} cadastrado com sucesso.")
                     }
-                } else {
-                    Log.e(this.toString(), "Erro ao criar usuário: ${task.exception?.message}")
-                }
+            },
+            Response.ErrorListener { error ->
+                Log.e(this.toString(), error.message ?: "Error")
             }
+        )
+
+        queue.add(request)
     }
 
-
-    fun load(userId: String) : LiveData<User> {
+    fun load(userId: String): LiveData<User> {
         val liveData = MutableLiveData<User>()
 
         val userRef = firestore.collection("user").document(userId)
@@ -109,14 +102,9 @@ class UserRepository (application: Application) {
 
         return liveData
     }
-    fun setUser(user: User) {
-        userLiveData.value = user
-    }
-
-    fun getUser(): LiveData<User> = userLiveData
 
 
-    fun update(user: User) : Boolean {
+    fun update(user: User): Boolean {
 
         var updated = false
 
@@ -137,8 +125,8 @@ class UserRepository (application: Application) {
 
         const val PASSWORD_RESET = "accounts:sendOobCode"
 
-        const val KEY = "?key=AIzaSyBlefjmuBIvtl9AuI2HkgFYqAd5M1llll4" // pegar nas Configurações do Projeto no Firebase - valor parecido com AIzaSyBxFjit4FD8NN5Mx8hTFQQxeVA1Pv2OUag
+        const val KEY =
+            "?key=AIzaSyBlefjmuBIvtl9AuI2HkgFYqAd5M1llll4" // pegar nas Configurações do Projeto no Firebase - valor parecido com AIzaSyBxFjit4FD8NN5Mx8hTFQQxeVA1Pv2OUag
 
     }
-
 }

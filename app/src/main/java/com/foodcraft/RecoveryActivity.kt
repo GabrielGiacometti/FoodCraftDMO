@@ -1,6 +1,8 @@
 package com.foodcraft
 
+import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
@@ -10,11 +12,14 @@ import com.google.firebase.auth.FirebaseAuth
 class RecoveryActivity : AppCompatActivity() {
     private lateinit var emailEditText: EditText
     private lateinit var resetPasswordButton: Button
+    private lateinit var btnBack: Button
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_recovery)
         emailEditText = findViewById(R.id.editTextEmailAddress)
         resetPasswordButton = findViewById(R.id.buttonRecovery)
+        setBtnBack()
 
         resetPasswordButton.setOnClickListener {
             val email = emailEditText.text.toString().trim()
@@ -34,5 +39,17 @@ class RecoveryActivity : AppCompatActivity() {
             }
         }
 
+    }
+
+    private fun setBtnBack() {
+        btnBack = findViewById(R.id.backButton)
+        btnBack.setOnClickListener(View.OnClickListener {
+            val intent = Intent(
+                this@RecoveryActivity,
+                LoginActivity::class.java
+            )
+            startActivity(intent)
+
+        })
     }
 }
