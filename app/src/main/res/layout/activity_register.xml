@@ -47,6 +47,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/email"
+        android:textColor="@color/dark_green"
         android:drawableStart="@drawable/icon_mail"
         android:fontFamily="@font/kodchasan_regular"
         android:padding="8dp"
@@ -70,6 +71,7 @@
         android:hint="@string/password"
         android:drawableStart="@drawable/icon_lock"
         android:fontFamily="@font/kodchasan_regular"
+        android:textColor="@color/dark_green"
         android:padding="8dp"
         android:paddingStart="12dp"
         android:paddingEnd="12dp"
@@ -84,16 +86,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextTextEmailAddress2" />
 
-    <ImageButton
-        android:id="@+id/imageButton2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:background="#00000000"
-        app:layout_constraintBottom_toBottomOf="@+id/editTextTextPassword"
-        app:layout_constraintEnd_toEndOf="@+id/editTextTextPassword"
-        app:layout_constraintTop_toTopOf="@+id/editTextTextPassword"
-        app:srcCompat="@drawable/icon_eye_off" />
 
     <EditText
         android:id="@+id/editTextTextConfirmPassword"
@@ -111,21 +103,11 @@
         android:background="@drawable/background_rectangle_green"
         android:layout_marginTop="22dp"
         android:ems="10"
+        android:textColor="@color/dark_green"
         android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextTextPassword" />
-
-    <ImageButton
-        android:id="@+id/imageButton3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="#00000000"
-        android:layout_marginEnd="16dp"
-        app:layout_constraintBottom_toBottomOf="@+id/editTextTextConfirmPassword"
-        app:layout_constraintEnd_toEndOf="@+id/editTextTextConfirmPassword"
-        app:layout_constraintTop_toTopOf="@+id/editTextTextConfirmPassword"
-        app:srcCompat="@drawable/icon_eye_off" />
 
     <Button
         android:id="@+id/button3"

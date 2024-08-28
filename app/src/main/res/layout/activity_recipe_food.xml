@@ -39,7 +39,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="12dp"
                     android:layout_marginTop="16dp"
-                    android:backgroundTint="@null"
+                    android:background="@null"
                     android:scaleX="1.5"
                     android:scaleY="1.5"
                     app:layout_constraintStart_toStartOf="@+id/foodImage"
@@ -57,7 +57,7 @@
                     app:srcCompat="@drawable/rounded_top_retangle" />
 
                 <TextView
-                    android:id="@+id/timeText"
+                    android:id="@+id/prepareTimeText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="42dp"
@@ -89,11 +89,11 @@
                     android:text="Prato Principal"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="@+id/foodImage"
-                    app:layout_constraintStart_toEndOf="@+id/timeText"
+                    app:layout_constraintStart_toEndOf="@+id/prepareTimeText"
                     app:layout_constraintTop_toTopOf="@+id/background" />
 
                 <TextView
-                    android:id="@+id/portionText"
+                    android:id="@+id/foodYieldText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
@@ -128,7 +128,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:layout_constraintBottom_toBottomOf="@+id/foodTitleText"
-                    app:layout_constraintEnd_toEndOf="@+id/portionText"
+                    app:layout_constraintEnd_toEndOf="@+id/foodYieldText"
+                    android:background="@null"
+                    android:scaleX="1.5"
+                    android:scaleY="1.5"
                     app:layout_constraintHorizontal_bias="1.0"
                     app:layout_constraintStart_toEndOf="@+id/foodTitleText"
                     app:layout_constraintTop_toTopOf="@+id/foodTitleText"
@@ -141,7 +144,7 @@
                     android:fontFamily="@font/kodchasan_regular"
                     android:text="A combinação entre batata-doce, cenoura e couve-flor traz a esta preparação diferentes texturas. A explosão de sabores fica por conta do curry, da pimenta, do coentro e das hortaliças. Pensa em um ensopado delicioso!"
                     android:textColor="#393427"
-                    app:layout_constraintEnd_toEndOf="@+id/portionText"
+                    app:layout_constraintEnd_toEndOf="@+id/foodYieldText"
                     app:layout_constraintStart_toStartOf="@+id/foodTitleText"
                     app:layout_constraintTop_toBottomOf="@+id/foodTitleText" />
 
