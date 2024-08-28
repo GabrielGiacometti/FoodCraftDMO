@@ -39,11 +39,6 @@ class LoginActivity : AppCompatActivity() {
                 userViewModel.login(edtEmail.text.toString(), edtPassword.text.toString())
                     .observe(this, Observer { user ->
                         if (user == null) {
-                            Toast.makeText(
-                                applicationContext,
-                                getString(R.string.login_message),
-                                Toast.LENGTH_SHORT
-                            ).show()
                             return@Observer
                         } else {
                             CurrentUserSingleton.setUser(user)

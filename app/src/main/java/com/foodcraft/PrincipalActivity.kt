@@ -5,10 +5,12 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.view.View
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.ListView
 import android.widget.ArrayAdapter
+import android.widget.ImageView
 import android.widget.SearchView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -25,6 +27,7 @@ class PrincipalActivity : AppCompatActivity() {
     private lateinit var recipeAdapter: RecipeAdapter
     private lateinit var editTextFilter: EditText
     private lateinit var buttonAddIngredients: ImageButton
+    private lateinit var buttonProfile: ImageView
     private val recipeRepository = RecipeRepository() // Criação única de RecipeRepository
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,6 +38,17 @@ class PrincipalActivity : AppCompatActivity() {
         setupRecyclerView()
         setupEditTextFilter()
         setupButtonAddIngredients()
+    }
+
+    private fun setBtnProfile() {
+        buttonProfile = findViewById(R.id.avatarImage)
+        buttonProfile.setOnClickListener(View.OnClickListener {
+            val intent = Intent(
+                this@PrincipalActivity,
+                ProfileActivity::class.java
+            )
+            startActivity(intent)
+        })
     }
 
     private fun initializeViews() {

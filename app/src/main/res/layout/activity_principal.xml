@@ -11,16 +11,17 @@
         android:id="@+id/editTextIngredients"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="Digite um ingrediente"
-        android:background="@drawable/background_rectangle_green"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="76dp"
         android:layout_marginEnd="16dp"
-        android:textColor="@color/dark_green"
+        android:background="@drawable/background_rectangle_green"
+        android:hint="Digite um ingrediente"
         android:paddingStart="16dp"
+        android:textColor="@color/dark_green"
+        app:layout_constraintEnd_toStartOf="@+id/buttonAddIngredients"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/buttonAddIngredients" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
         android:id="@+id/buttonAddIngredients"
@@ -35,6 +36,16 @@
         app:layout_constraintTop_toTopOf="@+id/editTextIngredients"
         app:layout_constraintEnd_toEndOf="parent" />
 
+    <ImageView
+        android:id="@+id/avatarImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="28dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/perfil_avatar" />
+
     <TextView
         android:id="@+id/textViewListIngredients"
         android:layout_width="match_parent"
@@ -48,8 +59,8 @@
         android:id="@+id/recyclerViewRecipes"
         app.layout_constraintBottom_toBottomOf="parent"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="20dp"
         app:layout_constraintTop_toBottomOf="@+id/textViewListIngredients"
         tools:listitem="@layout/recycler_view_recipes" />
 
