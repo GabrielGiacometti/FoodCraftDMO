@@ -1,20 +1,20 @@
 package com.foodcraft.model
 
-import androidx.room.Entity
-import androidx.room.Ignore
-import androidx.room.PrimaryKey
 import java.io.Serializable
 import java.util.UUID
+data class User(
+    var id: String = "",
+    val email: String = "",
+    val name: String = "",
+    var password: String = "",
+    val image: String = ""
+) : Serializable {
 
-@Entity(tableName = "user")
-data class User (
-    @PrimaryKey var id: String = UUID.randomUUID().toString(),
-    var email: String,
-    var name: String?= null,
-    var password: String,
-    val image: String?= null) : Serializable {
-
-
-    @Ignore
-    constructor() : this("", "", null, "", null)
+    constructor() : this(
+        id = "",
+        email = "",
+        name = "",
+        password = "",
+        image = ""
+    )
 }

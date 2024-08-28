@@ -11,6 +11,7 @@ import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import org.json.JSONObject
 
@@ -18,79 +19,81 @@ class UserRepository (application: Application) {
 
     private val firestore = FirebaseFirestore.getInstance()
     private val userLiveData = MutableLiveData<User>()
-    private val queue = Volley.newRequestQueue(application)
 
     private val preference = PreferenceManager.getDefaultSharedPreferences(application)
 
-    fun login(email: String, password: String) : LiveData<User> {
-
+    fun login(email: String, password: String): LiveData<User> {
         val liveData = MutableLiveData<User>(null)
 
-        val params = JSONObject().also {
-            it.put("email", email)
-            it.put("password", password)
-            it.put("returnSecureToken", true)
-        }
 
-        val request = JsonObjectRequest(
-            Request.Method.POST
-            , BASE_URL + SIGNIN + KEY
-            , params
-            , Response.Listener { response ->
-                val localId = response.getString("localId")
-                val idToken = response.getString("idToken")
+        FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
 
-                firestore.collection("user")
-                    .document(localId).get().addOnSuccessListener {
-                        val user = it.toObject(User::class.java)
-                        user?.id = localId
-                        user?.password = idToken
+                    val user = FirebaseAuth.getInstance().currentUser
+                    val localId = user?.uid
+                    val idToken = task.result?.user?.getIdToken(false)?.result?.token
 
-                        liveData.value = user
+                    if (localId != null && idToken != null) {
 
-                        preference.edit().putString(UserViewModel.USER_ID, localId).apply()
+                        FirebaseFirestore.getInstance().collection("user")
+                            .document(localId).get()
+                            .addOnSuccessListener { documentSnapshot ->
+                                val userData = documentSnapshot.toObject(User::class.java)
+                                userData?.id = localId
+                                userData?.password = idToken //
 
-                        firestore.collection("user")
-                            .document(localId).set(user!!)
+                                liveData.value = userData
+
+
+                                preference.edit().putString(UserViewModel.USER_ID, localId).apply()
+
+
+                                FirebaseFirestore.getInstance().collection("user")
+                                    .document(localId).set(userData!!)
+                            }
+                            .addOnFailureListener { e ->
+                                Log.e(this.toString(), "Erro ao recuperar os dados do Firestore", e)
+                            }
                     }
+                } else {
+                    Log.e(this.toString(), "Erro ao fazer login: ${task.exception?.message}")
+                }
             }
-            , Response.ErrorListener { error ->
-                Log.e(this.toString(), error.message ?: "Error")
-            }
-        )
-
-        queue.add(request)
 
         return liveData
     }
 
+
     fun createUser(user: User) {
 
-        val params = JSONObject().also {
-            it.put("email", user.email)
-            it.put("password", user.password)
-            it.put("returnSecureToken", true)
-        }
+        FirebaseAuth.getInstance().createUserWithEmailAndPassword(user.email, user.password)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
 
-        val request = JsonObjectRequest(Request.Method.POST
-            , BASE_URL + SIGNUP + KEY
-            , params
-            , Response.Listener { response ->
-                user.id = response.getString("localId")
-                user.password = response.getString("idToken")
+                    val firebaseUser = FirebaseAuth.getInstance().currentUser
+                    val localId = firebaseUser?.uid
+                    val idToken = task.result?.user?.getIdToken(false)?.result?.token
 
-                firestore.collection("user")
-                    .document(user.id).set(user).addOnSuccessListener {
-                        Log.d(this.toString(), "Usuário ${user.email} cadastrado com sucesso.")
+                    if (localId != null && idToken != null) {
+                        user.id = localId
+                        user.password = idToken
+
+                        FirebaseFirestore.getInstance().collection("user")
+                            .document(localId).set(user)
+                            .addOnSuccessListener {
+                                Log.d(this.toString(), "Usuário ${user.email} cadastrado com sucesso.")
+                            }
+                            .addOnFailureListener { e ->
+                                Log.e(this.toString(), "Erro ao salvar usuário no Firestore", e)
+                            }
                     }
+                } else {
+                    Log.e(this.toString(), "Erro ao criar usuário: ${task.exception?.message}")
+                }
             }
-            , Response.ErrorListener { error ->
-                Log.e(this.toString(), error.message ?: "Error")
-            }
-        )
-
-        queue.add(request)
     }
+
 
     fun load(userId: String) : LiveData<User> {
         val liveData = MutableLiveData<User>()
