@@ -38,6 +38,7 @@ class PrincipalActivity : AppCompatActivity() {
         setupRecyclerView()
         setupEditTextFilter()
         setupButtonAddIngredients()
+        setBtnProfile()
     }
 
     private fun setBtnProfile() {
