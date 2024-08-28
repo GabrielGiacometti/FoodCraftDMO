@@ -35,7 +35,7 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="472dp"
         android:background="@drawable/background_rectangle_green"
-        android:drawableStart="@drawable/hearth"
+        android:drawableStart="@drawable/hearth_active"
         android:drawablePadding="6dp"
         android:fontFamily="@font/kodchasan_regular"
         android:padding="8dp"
