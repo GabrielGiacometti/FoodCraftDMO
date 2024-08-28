@@ -17,7 +17,6 @@ class RecipeAdapter(
     private val onItemClick: (RecipeModel) -> Unit
 ) : RecyclerView.Adapter<RecipeAdapter.ViewHolder>() {
 
-    private var originalRecipes: List<RecipeModel> = recipes
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val textViewRecipeTitle: TextView = itemView.findViewById(R.id.textViewRecipeTitle)
@@ -56,23 +55,5 @@ class RecipeAdapter(
 
     override fun getItemCount(): Int = recipes.size
 
-    @SuppressLint("NotifyDataSetChanged")
-    fun filter(query: String) {
-        val queries = query.split(",").map { it.trim().lowercase() }.filter { it.isNotEmpty() }
-
-
-        recipes = if (queries.isEmpty()) {
-            originalRecipes
-        } else {
-            originalRecipes.filter { recipe ->
-                queries.any { query ->
-                    recipe.recipeIngredient.any { ingredient ->
-                        ingredient.lowercase().contains(query)
-                    }
-                }
-            }
-        }
-        notifyDataSetChanged()
-    }
 
 }

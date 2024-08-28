@@ -2,23 +2,22 @@ package com.foodcraft
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
 import android.text.TextWatcher
-import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.RecyclerView
-import com.foodcraft.adapter.RecipeAdapter
-import com.foodcraft.repository.RecipeRepository
 import android.util.Log
 import android.widget.EditText
-import android.text.Editable
-import android.widget.ArrayAdapter
 import android.widget.ImageButton
 import android.widget.ListView
+import android.widget.ArrayAdapter
 import android.widget.SearchView
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.foodcraft.adapter.RecipeAdapter
 import com.foodcraft.database.IngredientList
-
+import com.foodcraft.model.RecipeModel
+import com.foodcraft.repository.RecipeRepository
 
 class PrincipalActivity : AppCompatActivity() {
 
@@ -26,27 +25,12 @@ class PrincipalActivity : AppCompatActivity() {
     private lateinit var recipeAdapter: RecipeAdapter
     private lateinit var editTextFilter: EditText
     private lateinit var buttonAddIngredients: ImageButton
-    private lateinit var recipeRepository: RecipeRepository
-
+    private val recipeRepository = RecipeRepository() // Criação única de RecipeRepository
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_principal)
-        recipeRepository = RecipeRepository()
-        recipeAdapter = RecipeAdapter(emptyList()) { selectedRecipe ->
-            val intent = Intent(this, RecipeFoodActivity::class.java).apply {
-                putExtra("RECIPE_NAME", selectedRecipe.name)
-                putExtra("RECIPE_IMAGE", selectedRecipe.imageUrl)
-                putExtra("RECIPE_DESCRIPTION", selectedRecipe.description)
-                putExtra("RECIPE_INGREDIENTS", selectedRecipe.recipeIngredient.toTypedArray())
-                putExtra("RECIPE_INSTRUCTIONS", selectedRecipe.recipeInstructions.toTypedArray())
-                putExtra("TOTAL_TIME", selectedRecipe.totalTime)
-                putExtra("RECIPE_YIELD", selectedRecipe.recipeYield)
-                putExtra("RECIPE_CATEGORY", selectedRecipe.recipeCategory.toTypedArray())
-                putExtra("RECIPE_CUISINE", selectedRecipe.recipeCuisine.toTypedArray())
-            }
-            startActivity(intent)
-        }
+
         initializeViews()
         setupRecyclerView()
         setupEditTextFilter()
@@ -58,47 +42,26 @@ class PrincipalActivity : AppCompatActivity() {
         recyclerView = findViewById(R.id.recyclerViewRecipes)
         buttonAddIngredients = findViewById(R.id.buttonAddIngredients)
     }
-    private fun setupRecyclerView() {
 
+    private fun setupRecyclerView() {
+        recipeAdapter = RecipeAdapter(emptyList()) { selectedRecipe ->
+            navigateToRecipeDetails(selectedRecipe)
+        }
         recyclerView.adapter = recipeAdapter
         recyclerView.layoutManager = GridLayoutManager(this, 2)
 
-
-        val recipeRepository = RecipeRepository()
         recipeRepository.getRecipes(
-            onSuccess = { recipes ->
-                recipeAdapter.updateRecipes(recipes)
-            },
-            onError = { error ->
-                Log.e("RecipeRepository", "Error getting recipes:", error.toException())
-            }
+            onSuccess = { recipes -> recipeAdapter.updateRecipes(recipes) },
+            onError = { error -> Log.e("RecipeRepository", "Error getting recipes:", error.toException()) }
         )
     }
-
 
     private fun setupEditTextFilter() {
         editTextFilter.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                val filterText = s.toString().trim().lowercase()
-
-
-                recipeRepository.getRecipes(
-                    onSuccess = { recipes ->
-
-                        val filteredRecipes = recipes.filter { recipe ->
-                            recipe.name.lowercase().contains(filterText)
-                        }
-
-                        recipeAdapter.updateRecipes(filteredRecipes)
-                    },
-                    onError = { error ->
-                        Log.e("RecipeRepository", "Error getting recipes:", error.toException())
-                    }
-                )
+                filterRecipes(s.toString().trim())
             }
-
             override fun afterTextChanged(s: Editable?) {}
         })
     }
@@ -107,6 +70,43 @@ class PrincipalActivity : AppCompatActivity() {
         buttonAddIngredients.setOnClickListener {
             showIngredientDialog(editTextFilter)
         }
+    }
+
+    private fun navigateToRecipeDetails(recipe: RecipeModel) {
+        val intent = Intent(this, RecipeFoodActivity::class.java).apply {
+            putExtra("RECIPE_NAME", recipe.name)
+            putExtra("RECIPE_IMAGE", recipe.imageUrl)
+            putExtra("RECIPE_DESCRIPTION", recipe.description)
+            putExtra("RECIPE_INGREDIENTS", recipe.recipeIngredient.toTypedArray())
+            putExtra("RECIPE_INSTRUCTIONS", recipe.recipeInstructions.toTypedArray())
+            putExtra("TOTAL_TIME", recipe.totalTime)
+            putExtra("RECIPE_YIELD", recipe.recipeYield)
+            putExtra("RECIPE_CATEGORY", recipe.recipeCategory.toTypedArray())
+            putExtra("RECIPE_CUISINE", recipe.recipeCuisine.toTypedArray())
+        }
+        startActivity(intent)
+    }
+
+    private fun filterRecipes(filterText: String) {
+        val queries = filterText.split(",").map { it.trim().lowercase() }.filter { it.isNotEmpty() }
+
+        recipeRepository.getRecipes(
+            onSuccess = { recipes ->
+                val filteredRecipes = if (filterText.isEmpty()) {
+                    recipes
+                } else {
+                    recipes.filter { recipe ->
+                        queries.any { query ->
+                            recipe.recipeIngredient.any { ingredient ->
+                                ingredient.lowercase().contains(query)
+                            }
+                        }
+                    }
+                }
+                recipeAdapter.updateRecipes(filteredRecipes)
+            },
+            onError = { error -> Log.e("RecipeRepository", "Error getting recipes:", error.toException()) }
+        )
     }
 
     private fun showIngredientDialog(editText: EditText) {
@@ -132,24 +132,21 @@ class PrincipalActivity : AppCompatActivity() {
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean = false
-
             override fun onQueryTextChange(newText: String?): Boolean {
                 adapter.filter.filter(newText)
                 return true
             }
         })
 
-        val builder = AlertDialog.Builder(this)
-        builder.setTitle(R.string.escolha_ingredientes)
-        builder.setView(dialogView)
-        builder.setPositiveButton(R.string.add) { _, _ ->
-            val selectedText = selectedIngredients.joinToString(", ")
-            val currentText = editText.text.toString()
-            editText.setText(if (currentText.isNotEmpty()) "$currentText, $selectedText" else selectedText)
-        }
-        builder.setNegativeButton(R.string.cancel, null)
-        builder.show()
+        AlertDialog.Builder(this)
+            .setTitle(R.string.escolha_ingredientes)
+            .setView(dialogView)
+            .setPositiveButton(R.string.add) { _, _ ->
+                val selectedText = selectedIngredients.joinToString(", ")
+                val currentText = editText.text.toString()
+                editText.setText(if (currentText.isNotEmpty()) "$currentText, $selectedText" else selectedText)
+            }
+            .setNegativeButton(R.string.cancel, null)
+            .show()
     }
 }
-
-
