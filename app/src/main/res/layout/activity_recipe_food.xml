@@ -5,13 +5,15 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/backgroundradial"
     tools:context=".RecipeFoodActivity">
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:layout_editor_absoluteX="-34dp"
-        tools:layout_editor_absoluteY="85dp">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -49,7 +51,7 @@
                 <ImageView
                     android:id="@+id/background"
                     android:layout_width="match_parent"
-                    android:layout_height="600dp"
+                    android:layout_height="100dp"
                     android:layout_marginTop="220dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -112,12 +114,16 @@
 
                 <TextView
                     android:id="@+id/foodTitleText"
-                    android:layout_width="wrap_content"
+                    android:layout_width="300"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="28dp"
+                    android:breakStrategy="high_quality"
+                    android:ellipsize="end"
                     android:fontFamily="@font/kodchasan_regular"
-                    android:text="Curry de legumes"
-                    android:textColor="#393427"
+                    android:maxLines="5"
+                    android:singleLine="false"
+                    android:text="Salada de chuchu na panela de pressão elétrica"
+                    android:textColor="@color/brown"
                     android:textSize="22sp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="@+id/foodImage"
@@ -127,11 +133,11 @@
                     android:id="@+id/hearthButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintBottom_toBottomOf="@+id/foodTitleText"
-                    app:layout_constraintEnd_toEndOf="@+id/foodYieldText"
                     android:background="@null"
                     android:scaleX="1.5"
                     android:scaleY="1.5"
+                    app:layout_constraintBottom_toBottomOf="@+id/foodTitleText"
+                    app:layout_constraintEnd_toEndOf="@+id/foodYieldText"
                     app:layout_constraintHorizontal_bias="1.0"
                     app:layout_constraintStart_toEndOf="@+id/foodTitleText"
                     app:layout_constraintTop_toTopOf="@+id/foodTitleText"
@@ -141,12 +147,72 @@
                     android:id="@+id/descriptionFoodText"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:breakStrategy="high_quality"
                     android:fontFamily="@font/kodchasan_regular"
+                    android:singleLine="false"
                     android:text="A combinação entre batata-doce, cenoura e couve-flor traz a esta preparação diferentes texturas. A explosão de sabores fica por conta do curry, da pimenta, do coentro e das hortaliças. Pensa em um ensopado delicioso!"
-                    android:textColor="#393427"
+                    android:textColor="@color/brown"
+                    android:textSize="16dp"
                     app:layout_constraintEnd_toEndOf="@+id/foodYieldText"
                     app:layout_constraintStart_toStartOf="@+id/foodTitleText"
                     app:layout_constraintTop_toBottomOf="@+id/foodTitleText" />
+
+                <TextView
+                    android:id="@+id/ingredientsTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:drawableStart="@drawable/ingredient_icon_small"
+                    android:drawablePadding="4dp"
+                    android:text="Ingredientes"
+                    android:textColor="@color/brown"
+                    android:textSize="22sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="@+id/descriptionFoodText"
+                    app:layout_constraintTop_toBottomOf="@+id/descriptionFoodText" />
+
+                <TextView
+                    android:id="@+id/ingredientsDescription"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="6dp"
+                    android:fontFamily="@font/kodchasan_regular"
+                    android:text="- 3 chuchus (cerca de 500 g)\n- ½ cebola-roxa\n- 1 pimenta dedo-de-moça\n- 1 dente de alho\n- 1 litro de água\n- caldo de 1 limão\n- 3 colheres (sopa) de azeite\n- 1 folha de louro\n- 3 ramos de salsinha\n- sal"
+                    android:textColor="@color/brown"
+                    android:textStyle="bold"
+                    android:textSize="14sp"
+                    app:layout_constraintStart_toStartOf="@+id/ingredientsTitle"
+                    app:layout_constraintTop_toBottomOf="@+id/ingredientsTitle" />
+
+                <TextView
+                    android:id="@+id/prepareTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:drawableStart="@drawable/recipe_icon_small"
+                    android:drawablePadding="4dp"
+                    android:text="Modo de Preparo"
+                    android:textColor="@color/brown"
+                    android:textSize="22sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="@+id/ingredientsTitle"
+                    app:layout_constraintTop_toBottomOf="@+id/ingredientsDescription" />
+
+                <TextView
+                    android:id="@+id/prepareDescription"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="6dp"
+                    android:fontFamily="@font/kodchasan_regular"
+                    android:text="1. Descasque, lave e seque bem os chuchus com um pano de prato — assim eles não escorregam na hora de cortar. Corte cada chuchu ao meio, no sentido do comprimento, e, com uma colher, retire e descarte as sementes. Corte cada metade ao meio novamente no comprimento para formar 4 gomos. Corte cada gomo de chuchu na diagonal em 3 pedaços de cerca de 4 cm. Com a lateral da faca, amasse e descasque o dente de alho.\n\n2. Transfira o chuchu para a panela de pressão elétrica, cubra com a água, adicione o alho e o louro e tempere com 2 colheres (chá) de sal. Feche a tampa, ajuste a válvula e programe a panela para cozinhar em pressão alta por 3 minutos — a panela de pressão começará a funcionar automaticamente.\n\n3. Enquanto o chuchu cozinha, prepare o restante dos ingredientes. Descasque e corte a cebola-roxa em fatias finas no sentido do comprimento. Transfira para uma tigela, cubra com água, adicione cubos de gelo e deixe de molho por 10 minutos — assim ela permanece crocante e perde o ardor. Lave, seque e corte a pimenta dedo-de-moça ao meio no sentido do comprimento. Com a ponta de uma colher, retire e descarte as sementes. Fatie fino cada uma das metades. Lave, seque e pique grosseiramente a salsinha.\n\n4. Passado o tempo de cozimento, desligue a panela e ajuste a válvula para liberar a pressão — não espere o vapor sair naturalmente, pois, nesse meio-tempo, o chuchu pode passar do ponto e ficar mole demais para a salada.\n\n5. Escorra a água e transfira o chuchu para uma tigela (descarte o alho e o louro). Escorra também a água da cebola e junte ao chuchu. Adicione a pimenta e a salsinha, tempere com o caldo de limão, o azeite e sal a gosto. Leve à geladeira para esfriar por, pelo menos, 30 minutos antes de servir.\n\n"
+                    android:textColor="@color/brown"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="@+id/descriptionFoodText"
+                    app:layout_constraintStart_toStartOf="@+id/prepareTitle"
+                    app:layout_constraintTop_toBottomOf="@+id/prepareTitle" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
