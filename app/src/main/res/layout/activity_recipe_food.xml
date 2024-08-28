@@ -114,7 +114,7 @@
 
                 <TextView
                     android:id="@+id/foodTitleText"
-                    android:layout_width="300"
+                    android:layout_width="300dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="28dp"
                     android:breakStrategy="high_quality"
