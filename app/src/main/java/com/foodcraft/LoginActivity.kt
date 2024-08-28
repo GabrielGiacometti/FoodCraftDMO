@@ -35,27 +35,35 @@ class LoginActivity : AppCompatActivity() {
         edtPassword = findViewById(R.id.editTextTextPassword2)
         btnLoginUser = findViewById(R.id.button2)
         btnLoginUser.setOnClickListener {
-            if (validate()) {
-                userViewModel.login(edtEmail.text.toString(), edtPassword.text.toString())
-                    .observe(this, Observer { user ->
-                        if (user == null) {
-                            Toast.makeText(
-                                applicationContext,
-                                getString(R.string.login_message),
-                                Toast.LENGTH_SHORT
-                            ).show()
-                            return@Observer
-                        } else {
-                            CurrentUserSingleton.setUser(user)
-                            intent = Intent(
-                                this@LoginActivity,
-                                PrincipalActivity::class.java
-                            )
-                            startActivity(intent)
-                            finish()
-                        }
-                    })
-            }
+
+            intent = Intent(
+                this@LoginActivity,
+                PrincipalActivity::class.java
+            )
+            startActivity(intent)
+            finish()
+
+//            if (validate()) {
+//                userViewModel.login(edtEmail.text.toString(), edtPassword.text.toString())
+//                    .observe(this, Observer { user ->
+//                        if (user == null) {
+//                            Toast.makeText(
+//                                applicationContext,
+//                                getString(R.string.login_message),
+//                                Toast.LENGTH_SHORT
+//                            ).show()
+//                            return@Observer
+//                        } else {
+//                            CurrentUserSingleton.setUser(user)
+//                            intent = Intent(
+//                                this@LoginActivity,
+//                                PrincipalActivity::class.java
+//                            )
+//                            startActivity(intent)
+//                            finish()
+//                        }
+//                    })
+//            }
         }
     }
 
